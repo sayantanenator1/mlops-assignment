@@ -1,0 +1,33 @@
+name: CI/CD Pipeline for Flask App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Train the model
+        run: |
+          python train.py
+
+      - name: Deploy to Netlify
+        uses: netlify/actions/cli@v2
+        with:
+          auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          site: ${{ secrets.NETLIFY_SITE_ID }}
