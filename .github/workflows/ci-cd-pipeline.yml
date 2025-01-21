@@ -1,6 +1,9 @@
 name: CI/CD Pipeline for Flask App
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
@@ -24,11 +27,7 @@ jobs:
           python train.py
 
       - name: Deploy to Netlify
-        uses: netlify/actions/build@v1
+        uses: netlify/actions/cli@v2
         with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-
+          auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          site: ${{ secrets.NETLIFY_SITE_ID }}
