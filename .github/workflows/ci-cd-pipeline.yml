@@ -27,7 +27,12 @@ jobs:
           python train.py
 
       - name: Deploy to Netlify
-        uses: netlify/actions/cli@v2
+        uses: nwtgck/actions-netlify@v3.0
         with:
-          auth: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          site: ${{ secrets.NETLIFY_SITE_ID }}
+          publish-dir: '.'  # Root directory
+          production-branch: 'main'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
