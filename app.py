@@ -9,7 +9,7 @@ model = joblib.load('model.joblib')
 
 @app.route('/')
 def home():
-    return "Welcome to the Flask App!"
+    return "MLOPS Assignment"
 
 @app.route('/predict', methods=['POST'])
 def predict():
